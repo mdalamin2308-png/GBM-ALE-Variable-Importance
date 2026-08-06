@@ -53,6 +53,4 @@ pip install pandas numpy matplotlib seaborn scikit-learn scipy openpyxl alibi
 - Explainable AI (XAI)
 - Civil Engineering Research
 
-## License
 
-MIT License
