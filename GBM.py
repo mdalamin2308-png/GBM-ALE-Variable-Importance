@@ -271,11 +271,11 @@ X = df[[
 targets = ['Eff. As', 'Eff. Fe', 'Eff. P', 'Eff. Mn']
 performance = []
 
-# ২x২ প্রেডিকশন প্লটের ক্যানভাস তৈরি
+
 fig_pred, axes_pred = plt.subplots(2, 2, figsize=(11, 9), facecolor='white')
 axes_pred = axes_pred.flatten()
 
-# কম্বাইন্ড Variable Importance ডাটাফ্রেমের জন্য লিস্ট
+
 vi_list = []
 # ALE values per target collector
 ale_data_dict = {}
@@ -308,7 +308,7 @@ for idx, target in enumerate(targets):
     performance.append([target, r2, rmse])
 
     # --------------------------------------------------------
-    # ১. ২x২ প্রেডিকশন ম্যাট্রিক্সে প্লট যোগ করা
+
     # --------------------------------------------------------
     ax = axes_pred[idx]
     ax.set_facecolor('white')
@@ -325,7 +325,7 @@ for idx, target in enumerate(targets):
     ax.grid(True, linestyle=':', alpha=0.6, color='#cccccc')
 
     # --------------------------------------------------------
-    # ২. কম্বাইন্ড Variable Importance ডাটা কালেক্ট করা
+
     # --------------------------------------------------------
     vi_target = pd.DataFrame({
         'Variable': X.columns,
@@ -335,7 +335,7 @@ for idx, target in enumerate(targets):
     vi_list.append(vi_target)
 
     # --------------------------------------------------------
-    # ৩. ALE Plots (আলাদা আলাদা ফাইলে থাকবে পূর্বের নিয়মে)
+
     # --------------------------------------------------------
     if HAS_ALIBI:
         predict_fn = model.predict
@@ -429,14 +429,14 @@ for idx, target in enumerate(targets):
         ale_df = pd.DataFrame(columns=['Feature', 'BinCenter', 'ALE'])
     ale_data_dict[target] = ale_df
 
-# ২x২ প্রেডিকশন প্লট চূড়ান্তকরণ ও সেভ
+
 fig_pred.suptitle("Model Prediction Performance (2x2 Matrix)", fontsize=18, fontweight='bold', y=0.98)
 fig_pred.tight_layout(rect=[0, 0, 1, 0.96])
 fig_pred.savefig(os.path.join(result_folder, "Combined_Prediction_2x2.png"), dpi=300)
 plt.close()
 
 # ============================================================
-# ৪. VARIABLE IMPORTANCE প্লট জেনারেট করা (২x২ ফরম্যাটে আলাদা ৪টি টার্গেট)
+
 # ============================================================
 combined_vi = pd.concat(vi_list, ignore_index=True)
 order = combined_vi.groupby('Variable')['Importance'].mean().sort_values(ascending=False).index
@@ -466,7 +466,7 @@ for ax_idx, target_name in enumerate(targets_vi):
     ax.set_xlim(0, combined_vi['Importance'].max() * 1.05)
     ax.tick_params(axis='y', labelsize=20)
 
-# খালি সাবপ্লট গুলি অফ করা
+
 for idx in range(len(targets_vi), len(axes_vi)):
     axes_vi[idx].axis('off')
 
